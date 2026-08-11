@@ -49,15 +49,15 @@
 % If not, a labelled grey placeholder box is drawn instead, so the document
 % always compiles and you can see exactly which figures are still missing.
 %
-% Upload your PNGs to the Overleaf project root to replace the placeholders.
-% Expected filenames:
-%     fig1_workflow.png                     (does not exist yet - must be made)
-%     fig1_umap_celltypes.png
-%     fig2_tf_featureplots.png
-%     fig3_marker_dotplot.png
-%     fig4_networks_mature-endodermis.png
-%     fig4_networks_dividing_cells.png
-%     fig4_networks_exodermis.png
+% Upload your PNGs to the Overleaf project's figures/ folder to replace the
+% placeholders. Expected paths:
+%     figures/fig1_workflow.png                     (does not exist yet - must be made)
+%     figures/fig1_umap_celltypes.png
+%     figures/fig2_tf_featureplots.png
+%     figures/fig3_marker_dotplot.png
+%     figures/fig4_networks_mature-endodermis.png
+%     figures/fig4_networks_dividing_cells.png
+%     figures/fig4_networks_exodermis.png
 %------------------------------------------------------------------------------
 \usepackage{tikz}
 \newcommand{\FIGBOX}[2]{%
@@ -580,7 +580,7 @@ Rank & Cell type & Transcription factor & Family & Summed importance \\
 
 \begin{figure}[htbp]
 \centering
-\FIGBOX{fig1_workflow}{0.85}
+\FIGBOX{figures/fig1_workflow}{0.85}
 \begin{singlespace}
 \caption{Workflow of the agent-directed pipeline. Boxes indicate the stages of
 the protocol with the corresponding subheading below each. Stages above the
@@ -594,7 +594,7 @@ Fig.~1 of ref.~\cite{chau2023}. Save as fig1\_workflow.png.}}
 
 \begin{figure}[htbp]
 \centering
-\FIGBOX{fig1_umap_celltypes}{0.85}
+\FIGBOX{figures/fig1_umap_celltypes}{0.85}
 \begin{singlespace}
 \caption{UMAP embedding of 14,792 singlet nuclei from the sorghum root atlas,
 coloured by cell type. Coordinates and cell type labels are those supplied with
@@ -607,7 +607,7 @@ faithful to the source.}
 
 \begin{figure}[htbp]
 \centering
-\FIGBOX{fig2_tf_featureplots}{1.0}
+\FIGBOX{figures/fig2_tf_featureplots}{1.0}
 \begin{singlespace}
 \caption{Expression of selected transcription factors projected onto the UMAP
 embedding of Fig.~\ref{fig:umap}. Rows correspond to the three cell types
@@ -621,7 +621,7 @@ independent per panel.}
 
 \begin{figure}[htbp]
 \centering
-\FIGBOX{fig3_marker_dotplot}{0.8}
+\FIGBOX{figures/fig3_marker_dotplot}{0.8}
 \begin{singlespace}
 \caption{Dot plot of literature-curated sorghum root marker genes across all 27
 cell types. Dot size indicates the proportion of nuclei in which the gene is
@@ -636,11 +636,11 @@ identifiers is disambiguated with a gene identifier suffix.}
 
 \begin{figure}[htbp]
 \centering
-\FIGBOX{fig4_networks_mature-endodermis}{0.95}\\[4pt]
+\FIGBOX{figures/fig4_networks_mature-endodermis}{0.95}\\[4pt]
 {\small (\textbf{a}) mature-endodermis}\\[10pt]
-\FIGBOX{fig4_networks_dividing_cells}{0.95}\\[4pt]
+\FIGBOX{figures/fig4_networks_dividing_cells}{0.95}\\[4pt]
 {\small (\textbf{b}) dividing cells}\\[10pt]
-\FIGBOX{fig4_networks_exodermis}{0.95}\\[4pt]
+\FIGBOX{figures/fig4_networks_exodermis}{0.95}\\[4pt]
 {\small (\textbf{c}) exodermis}
 \begin{singlespace}
 \caption{Inferred transcription factor--target associations for
