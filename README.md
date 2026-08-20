@@ -2,8 +2,6 @@
 
 Single-cell gene regulatory network inference run end to end by an AI coding agent, directed by a single versioned prompt file. The worked example infers GRNBoost2 co-expression networks for three cell types from a published sorghum root single-nucleus RNA-seq atlas.
 
-Companion code for: Chaudhary M, Li S. Prompt-Directed Execution of a Single-Cell Gene Regulatory Network Analysis Using an AI Coding Agent. In: Mukhtar MS (ed) *Plant Gene Regulatory Networks: Methods and Protocols*, Methods in Molecular Biology. Springer, New York (in press).
-
 The primary artifact here is `prompt.md`. The scripts in `scripts/` were written by the agent at run time and are included for reference — the agent may write different code on a different run.
 
 ---
