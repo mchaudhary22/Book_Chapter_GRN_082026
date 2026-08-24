@@ -1,0 +1,138 @@
+%==============================================================================
+%  Methods in Molecular Biology chapter — DRAFT
+%
+%  Manisha Chaudhary, Song Li (Virginia Tech)
+%
+%  NOTES BEFORE SUBMISSION:
+%   - Text in \PLACEHOLDER{} requires a decision or a value you must supply.
+%   - EVERY reference must be verified against the actual paper. They were
+%     drafted without database access.
+%   - Springer prefers Word for MiMB. Confirm with your volume editor that
+%     LaTeX is acceptable; if not, compile and export, or paste section text
+%     into their Word template.
+%   - This uses plain article class so it compiles on Overleaf with no setup.
+%     If the editor supplies svmult.cls, migrate the preamble.
+%
+%  FILE LAYOUT
+%   preamble.tex               packages and settings shared by both PDFs (this file)
+%   body.tex                   the manuscript: title block through figure captions
+%   MiMB_chapter.tex           publisher version - figures off, captions only
+%   MiMB_chapter_withfigures.tex   advisor version - figures embedded
+%  There is exactly one copy of all prose, captions, notes, and tables, in
+%  body.tex. The two top-level files differ only in the \ifshowfigures switch.
+%==============================================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{needspace}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\doublespacing
+
+% Placeholder marker — makes unfinished items impossible to miss
+\newcommand{\PLACEHOLDER}[1]{\textbf{\color{red}[#1]}}
+
+% Cross-reference helpers matching MiMB house style
+\newcommand{\seenote}[1]{(\textit{see} \textbf{Note~#1})}
+\newcommand{\seenotes}[1]{(\textit{see} \textbf{Notes~#1})}
+\newcommand{\seesub}[1]{(\textit{see} \textbf{Subheading~#1})}
+
+%------------------------------------------------------------------------------
+% FIGURE-EMBEDDING SWITCH
+%
+% \ifshowfigures true  -> images are embedded above each caption (advisor PDF)
+% \ifshowfigures false -> captions only, per Springer's separate-files
+%                         instruction (publisher PDF)
+%
+% MiMB_chapter_withfigures.tex issues \newif\ifshowfigures and
+% \showfigurestrue of its own BEFORE \input{preamble} — so by the time this
+% file is read, \ifshowfigures already exists and is true. The guard below
+% only defines it (defaulting to false) when nothing has done so already,
+% which is the case for MiMB_chapter.tex.
+%------------------------------------------------------------------------------
+\makeatletter
+\@ifundefined{ifshowfigures}{%
+  \newif\ifshowfigures
+  \showfiguresfalse
+}{}
+\makeatother
+
+%------------------------------------------------------------------------------
+% FIGURE HANDLING
+%
+% \FIGBOX{filename-without-extension}{width as fraction of textwidth}
+%
+% If the image file exists in the project, it is included (via
+% \includegraphics with no extension - graphicx resolves it once existence
+% is confirmed). If not, a labelled grey placeholder box is drawn instead,
+% so the document always compiles and you can see exactly which figures are
+% still missing. Only called when \ifshowfigures is true (see body.tex).
+%
+% Upload your PNGs to the Overleaf project's figures/ folder to replace the
+% placeholders. Expected paths:
+%     figures/fig1_workflow.png
+%     figures/fig1_umap_celltypes.png
+%     figures/fig2_tf_featureplots.png
+%     figures/fig3_marker_dotplot.png
+%     figures/fig4_networks_mature-endodermis.png
+%     figures/fig4_networks_dividing_cells.png
+%     figures/fig4_networks_exodermis.png
+%------------------------------------------------------------------------------
+\usepackage{tikz}
+\newcommand{\FIGBOX}[2]{%
+  \IfFileExists{#1.png}{\includegraphics[width=#2\textwidth]{#1}}{%
+  \IfFileExists{#1.pdf}{\includegraphics[width=#2\textwidth]{#1}}{%
+    \fbox{\begin{minipage}[c][0.34\textwidth][c]{#2\textwidth}%
+      \centering\color{gray}%
+      {\ttfamily\small\detokenize{#1}}\\[6pt]
+      {\rmfamily\small image file not found in project}%
+    \end{minipage}}}}%
+}
+
+\lstset{
+  basicstyle=\ttfamily\small\setstretch{1.0},
+  breaklines=true,
+  frame=none,
+  xleftmargin=2em,
+  columns=fullflexible,
+  showstringspaces=false,
+  aboveskip=8pt,
+  belowskip=8pt
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% Headings single-spaced, with modest separation (defaults get stretched by \doublespacing)
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\titlespacing*{\subsection}{0pt}{8pt}{3pt}
+\titleformat{\section}{\normalfont\large\bfseries\singlespacing}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries\singlespacing}{\thesubsection}{0.7em}{}
+
+% Lists: double-spaced text, but no extra padding around or between items
+\setlist{topsep=3pt, partopsep=0pt, itemsep=3pt, parsep=0pt}
+
+% Float separation
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{4pt}
+
+% Non-floating figure caption, for the caption-only submission format
+\newcommand{\figcaption}[2]{%
+  \refstepcounter{figure}\label{#1}%
+  \begin{singlespace}\noindent\textbf{Fig.~\thefigure}\ #2\end{singlespace}%
+  \vspace{6pt}}
+
