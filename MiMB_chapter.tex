@@ -1,19 +1,3 @@
-%==============================================================================
-%  Methods in Molecular Biology chapter — DRAFT
-%
-%  Manisha Chaudhary, Song Li (Virginia Tech)
-%
-%  NOTES BEFORE SUBMISSION:
-%   - Text in \PLACEHOLDER{} requires a decision or a value you must supply.
-%   - EVERY reference must be verified against the actual paper. They were
-%     drafted without database access.
-%   - Springer prefers Word for MiMB. Confirm with your volume editor that
-%     LaTeX is acceptable; if not, compile and export, or paste section text
-%     into their Word template.
-%   - This uses plain article class so it compiles on Overleaf with no setup.
-%     If the editor supplies svmult.cls, migrate the preamble.
-%==============================================================================
-
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
@@ -41,24 +25,7 @@
 \newcommand{\seenotes}[1]{(\textit{see} \textbf{Notes~#1})}
 \newcommand{\seesub}[1]{(\textit{see} \textbf{Subheading~#1})}
 
-%------------------------------------------------------------------------------
-% FIGURE HANDLING
-%
-% \FIGBOX{filename-without-extension}{width as fraction of textwidth}
-%
-% If the image file exists in the project, it is included.
-% If not, a labelled grey placeholder box is drawn instead, so the document
-% always compiles and you can see exactly which figures are still missing.
-%
-% Upload your PNGs to the Overleaf project's figures/ folder to replace the
-% placeholders. Expected paths:
-%     figures/fig1_workflow.png
-%     figures/fig1_umap_celltypes.png
-%     figures/fig2_tf_featureplots.png
-%     figures/fig3_marker_dotplot.png
-%     figures/fig4_networks_mature-endodermis.png
-%     figures/fig4_networks_dividing_cells.png
-%     figures/fig4_networks_exodermis.png
+
 %------------------------------------------------------------------------------
 \usepackage{tikz}
 \newcommand{\FIGBOX}[2]{%
@@ -409,7 +376,7 @@ Figures~\ref{fig:umap} and \ref{fig:dotplot} reproduce features of the published
 
 \item \textbf{The prompt file must be revised as the run proceeds.} Several parameters were absent from the initial prompt because their necessity emerged only during execution --- the dask configuration, the thread caps, the AnnData assembly fallback, and the scheduler resource request. If these are recorded only in the generated scripts, the prompt ceases to be a sufficient artifact. We updated \texttt{prompt.md} at each such point and treated divergence between the prompt and the executed scripts as a defect requiring correction.
 
-\item \textbf{GRNBoost2 importance is not an absolute or probabilistic score.} Reading the arboreto 0.1.6 source, \texttt{grnboost2()} fits one \texttt{GradientBoostingRegressor} per target gene with \texttt{subsample=0.9}, which enables an out-of-bag early-stopping heuristic with a 25-round trailing window. Each reported importance is scikit-learn's \texttt{feature\_importances\_} --- normalized to sum to 1.0 across all 1,022 predictors, \textit{separately for each target's own model} --- multiplied by the number of boosting rounds actually used. We confirmed this empirically: per-target importance totals are near-exact integers ranging from 25 to 63 (median 27), with the lower bound equal to the early-stopping window length. Consequently, summed importance ranks transcription factors validly within a fixed target set, as used here, but magnitudes are not comparable across different marker sets or cell types, because each target's contribution is rescaled by its own convergence depth. We suggest stating this explicitly wherever importance values are reported.
+\item \textbf{GRNBoost2 importance is not an absolute or probabilistic score.} Reading the arboreto 0.1.6 source, \texttt{grnboost2()} fits one \texttt{GradientBoostingRegressor} \cite{pedregosa2011} per target gene with \texttt{subsample=0.9}, which enables an out-of-bag early-stopping heuristic with a 25-round trailing window. Each reported importance is scikit-learn's \texttt{feature\_importances\_} --- normalized to sum to 1.0 across all 1,022 predictors, \textit{separately for each target's own model} --- multiplied by the number of boosting rounds actually used. We confirmed this empirically: per-target importance totals are near-exact integers ranging from 25 to 63 (median 27), with the lower bound equal to the early-stopping window length. Consequently, summed importance ranks transcription factors validly within a fixed target set, as used here, but magnitudes are not comparable across different marker sets or cell types, because each target's contribution is rescaled by its own convergence depth. We suggest stating this explicitly wherever importance values are reported.
 
 \item \textbf{Co-expression inference cannot distinguish direction or causality.} In all three cell types, at least one selected transcription factor had among its highest-weighted targets a gene that was itself a selected transcription factor for the same cell type. In mature-endodermis the relationship is reciprocal: \texttt{SbiRTX430.09G017700} $\rightarrow$ \texttt{SbiRTX430.09G017600} at importance 5.41, and the reverse at 4.59, between two MYB genes co-expressed at $r = 0.56$ across 282 nuclei. Their locus identifiers differ by 100 on chromosome 9, consistent with adjacent genes under this annotation's numbering convention, although we did not confirm this against genome coordinates. Two co-expressed paralogs each predicting the other equally well is the expected behaviour of a method operating on expression correlation alone. We retained these edges in the figures and marked them, as they illustrate the limitation more concretely than a general statement.
 
@@ -515,7 +482,9 @@ The authors have no conflicts of interest to declare that are relevant to the co
 
 \bibitem{jin2017} Jin JP, Tian F, Yang DC et al (2017) PlantTFDB 4.0: toward a central hub for transcription factors and regulatory interactions in plants. Nucleic Acids Res 45(D1):D1040--D1045
 
-\bibitem{dask2016} Dask Development Team (2016) Dask: library for dynamic task scheduling. \url{https://dask.org}. Accessed \PLACEHOLDER{date}
+\bibitem{dask2016} Rocklin M (2015) Dask: parallel computation with blocked algorithms and task scheduling. In: Huff K, Bergstra J (eds) Proceedings of the 14th Python in Science Conference, Austin, July 2015, pp 126--132. doi:10.25080/Majora-7b98e3ed-013
+
+\bibitem{pedregosa2011} Pedregosa F, Varoquaux G, Gramfort A et al (2011) Scikit-learn: machine learning in Python. J Mach Learn Res 12:2825--2830
 
 \end{thebibliography}
 
