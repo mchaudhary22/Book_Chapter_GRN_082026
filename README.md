@@ -63,8 +63,8 @@ mkdir -p data/raw
 # the agent creates data/processed/, results/, figures/, and logs/ as it needs them
 
 module load Miniconda3/25.11.1-1          # your system's module name will differ
-mamba env create -f environment.yml -p ~/.conda/envs/grn
-source activate ~/.conda/envs/grn
+conda env create -f environment.yml -p ~/.conda/envs/grn   # mamba env create also works and is faster
+conda activate ~/.conda/envs/grn
 ```
 
 Verify the environment before running anything expensive. This takes seconds and catches two of the three known dependency problems:
@@ -77,7 +77,7 @@ python scripts/01_smoke_test_grnboost2.py     # must print 95 edges
 
 ## Edit `prompt.md` before running
 
-`prompt.md` is the file as used on ARC TinkerCliffs. Change these before running it anywhere else:
+If you are on ARC TinkerCliffs and using this same dataset, change only two things: the project path, so the agent writes into your own directory rather than ours, and the SLURM account in Step 04 if your allocation differs. Everything else: module names, partition, QOS, and all expected counts, is already correct for you. Skip the table below; it applies to a different cluster or a different dataset.`prompt.md` is the file as used on ARC TinkerCliffs. Change these before running it anywhere else:
 
 | Section | What to change |
 |---|---|
